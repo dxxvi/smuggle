@@ -8,22 +8,31 @@
   <style>
     .a { border: 1px solid #999; padding: 1rem; margin-top: 1rem }
     .a iframe { width: calc(100% - 3rem); height: 5rem }
+    input[type] { display: inline-block; margin-left: .5rem; margin-right: 1.5rem; padding-left: .5rem }
   </style>
 </head>
 <body>
+  Prefix: <input id="prefix" type="text" style="width: 20ch">
+  From: <input id="from" type="number" style="width: 6ch">
+  To: <input id="to" type="number" style="width: 6ch">
+  Total: <input id="total" type="number" style="width: 7ch">
   <button id="run" onclick="createIframes()">Run</button>
   
   <script>
     function createIframes() {
-      const N = 14;
-      for (let i = 1; i <= N; i++) {
+      const prefix = document.getElementById('prefix').value;
+      const from = Number.parseInt(document.getElementById('from').value);
+      const to = Number.parseInt(document.getElementById('to').value);
+      const total = Number.parseInt(document.getElementById('total').value);
+
+      for (let i = from; i <= to; i++) {
         // Create a div element
         const div = document.createElement('div');
         div.setAttribute('class', 'a');
         
         // Create an iframe element
         const iframe = document.createElement('iframe');
-        iframe.src = `duck-${i}of${N}.txt`;
+        iframe.src = `${prefix}-${i}of${total}.txt`;
         
         // Append iframe to div
         div.appendChild(iframe);
@@ -33,7 +42,7 @@
         
         // Wait for a random number of minutes (2-8)
         const randomMinutes = Math.floor(Math.random() * 7) + 2;
-        const milliseconds = randomMinutes * 60 * 100;
+        const milliseconds = randomMinutes * 60 * 1000;
         
         // Use setTimeout to wait
         setTimeout(() => {
